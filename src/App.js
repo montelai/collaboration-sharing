@@ -4,7 +4,6 @@ import { Container } from "@material-ui/core";
 import Boards from "./components/Boards";
 import Navigation from "./components/Navigation";
 import { connect } from "react-redux";
-import collaborationApp from "./reducers/reducer";
 
 class App extends Component {
   //sample board
@@ -15,10 +14,9 @@ class App extends Component {
   //   author:''
   // }
 
-  state = {
-    isLoading: true,
-    boards: []
-  };
+  componentDidMount(){
+
+  }
 
   render() {
     return (
@@ -32,7 +30,7 @@ class App extends Component {
         }}
       >
         <Navigation />
-        <Boards boards={[]} />
+        <Boards boards={this.props.boards} />
       </Container>
     );
   }
@@ -40,7 +38,9 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    boards: state.boards
+    boardId: state.boardId,
+    boards: state.boards,
+    isLoading:state.isLoading
   };
 };
 

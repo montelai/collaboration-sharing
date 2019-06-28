@@ -4,13 +4,29 @@ import { ADD_ITEM, REMOVE_ITEM, EDIT_ITEM } from "../actions/actions";
 // initial state
 
 const initialState = {
-  boards: [
+  boardId : [0,1,2],
+  boards: {todoBoard: 
     {
-      title: "test",
-      content:
-        "Sunt id eiusmod ex voluptate occaecat irure id laboris duis sint. Elit amet in sint eu ea aliquip pariatur minim ut dolor sunt non. Dolore ad aliquip reprehenderit est adipisicing est proident est deserunt. Est sunt eu proident exercitation amet eu labore ut sint fugiat aliqua sint aliquip pariatur. Sunt excepteur irure officia nostrud cupidatat duis aute veniam laborum proident nisi aliquip. Consectetur cupidatat nisi ea est eu."
-    }
-  ],
+      title: "Todo",
+      content: [
+        {
+          id: 0,
+          task: 'Sunt id eiusmod ex voluptate occaecat irure id laboris duis sint. Elit amet in sint eu ea aliquip pariatur minim ut dolor sunt non. Dolore ad aliquip reprehenderit est adipisicing est proident est deserunt. Est sunt eu proident exercitation amet eu labore ut sint fugiat aliqua sint aliquip pariatur. Sunt excepteur irure officia nostrud cupidatat duis aute veniam laborum proident nisi aliquip. Consectetur cupidatat nisi ea est eu."'
+        },
+      ]
+    },
+  ongoingBoard: 
+    {
+      title: "Ongoing",
+      content:[]
+    },
+
+  completedBoard : 
+    {
+      title: "Completed",
+      content:[]
+    }},
+  customBoard: [],
   isLoading: true
 };
 
@@ -42,7 +58,7 @@ function collaborationApp(state = initialState, action) {
 
     case EDIT_ITEM:
       const updatedItems = state.map(item => {
-        if (item.id == action.id) {
+        if (item.id === action.id) {
           return { ...item, ...action.content };
         }
         return item;

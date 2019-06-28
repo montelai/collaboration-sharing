@@ -17,16 +17,14 @@ const styles = makeStyles({
 
 export default function Boards(props) {
   const classes = styles();
+  
+  
 
   return (
     <Grid className={classes.Board}>
-      {props.boards.length === 0 ? (
-        <Board new={true} />
-      ) : (
-        props.boards.map(board => {
-          return <Board new={false} data={{}} />;
-        })
-      )}
+      {Object.keys(props.boards).map((key) => {
+        return <Board new={false} data={props.boards[key].content} title={props.boards[key].title} key={props.boards[key].title} id={key}/>
+      })}
     </Grid>
   );
 }

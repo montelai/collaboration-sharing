@@ -6,6 +6,7 @@ import RemoveCircle from "@material-ui/icons/RemoveCircle";
 import {connect} from 'react-redux';
 import compose from 'recompose/compose';
 
+
 const styles = {
   boardItem: {
     width: "270px",
@@ -13,10 +14,11 @@ const styles = {
     overflowY: "auto",
     backgroundColor: "#e2e4e6",
     boxShadow: "5px 10px  rbga(0,0,0,0.5)",
-    borderRadius: "3px",
+    borderRadius: "10px",
     verticalAlign: "top",
     padding: "5px",
-    paddingBottom: "20px"
+    paddingBottom: "20px",
+    margin: "10px"
   },
   boardItemContents: {},
   boardItemButtons: {
@@ -24,9 +26,13 @@ const styles = {
     justifyContent: "flex-end",
     padding: "0px, 5px, 0px, 5px"
   },
-  addIcon: {
-    color: "green",
-    margin: "3px"
+  addIcon : {
+    color: "#5aac44",
+    margin: "3px",
+    '&:hover' : {
+      color: "#52e02a",
+      margin: "3px"
+    }
   },
   removeIcon: {
     color: "red",
@@ -38,17 +44,20 @@ class Board extends Component {
 
   state = {
     isAdding : false,
-    content:''
+    content:'',
+    key:''
   }
 
-  addItemToBoard = () => {
+  addItemToBoard = (event) => {
+    console.log(event.target)
     this.setState ({
-      isAdding:true
+      isAdding:true,
+      key: this.props.id
     })
   }
 
   addItemToBoardForm = () => {
-    return <form autoComplete='off'>
+    return <form autoComplete='off' style={{'paddingTop':'10px', 'paddingBottom':'10px'}}>
             <CardContent>
               <form>
                 <TextField 
@@ -58,7 +67,7 @@ class Board extends Component {
                 />
               </form>   
             </CardContent>
-            <Grid styles={{justifyContent:'space-around'}}>
+            <Grid style={{'justifyContent':'space-evenly', 'display':'flex'}}>
               <Button 
                 variant='contained' 
                 color='primary'
@@ -77,6 +86,9 @@ class Board extends Component {
       </form>
   }
 
+  componentDidMount(){
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -87,15 +99,15 @@ class Board extends Component {
             className={classes.addIcon}
             onClick={this.addItemToBoard}
           />
-          <RemoveCircle 
+          {/* <RemoveCircle 
             className={classes.removeIcon} 
-            onClick={()=> {console.log("clicked");}}/>
+            onClick={()=> {console.log("clicked");}}/> */}
         </Grid>
         <Typography>
           {this.props.title ? this.props.title : "Enter a Title"}
         </Typography>
         <Card className={classes.boardItemContents}>
-          <CardContent>test 1 </CardContent>
+          <CardContent></CardContent>
           {this.state.isAdding ? 
             this.addItemToBoardForm()
             : null }
