@@ -44,8 +44,17 @@ class Board extends Component {
 
   state = {
     isAdding : false,
+    isEditing : false,
     content:'',
-    key:''
+    key:'',
+    hovering: false
+  }
+
+  editItem = (event) => {
+    this.setState({
+      isEditing: !this.state.isEditing,
+      key: this.props.id
+    })
   }
 
   addItemToBoard = (event) => {
@@ -56,11 +65,12 @@ class Board extends Component {
   }
 
   addItemToBoardForm = () => {
-    return <form autoComplete='off' style={{'paddingTop':'10px', 'paddingBottom':'10px'}}>
+    return <Card style={{'marginTop':'10px'}}>
+      <form autoComplete='off' style={{'paddingTop':'10px', 'paddingBottom':'10px'}}>
             <CardContent>
               <form>
                 <TextField 
-                  label='Enter Note' 
+                  label='Add new task' 
                   value={this.state.content}
                   onChange={(event)=>this.setState({content: event.target.value})}
                 />
@@ -83,6 +93,7 @@ class Board extends Component {
             </Grid>
             
       </form>
+      </Card>
   }
 
   componentDidMount(){
@@ -105,12 +116,39 @@ class Board extends Component {
         <Typography>
           {this.props.title ? this.props.title : "Enter a Title"}
         </Typography>
-        <Card className={classes.boardItemContents}>
-          <CardContent></CardContent>
+        {this.props.data.length < 1 ? 
+          <Card className={classes.boardItemContents}>
+            <CardContent/>
+          </Card>
+          : null}
+        
+        {this.props.data.map((value, index) => {
+          return <Card 
+                    className={classes.boardItemContents} 
+                    style={{'marginTop':'5px'}}
+                    onClick={this.editItem}
+                    >
+          <CardContent>
+            <Typography 
+              style={{
+                'textAlign':'start', 
+                'textOverflow':'string', 
+                'justifyContent':'flex-start'}}>
+                {value.task}
+              </Typography>
+            </CardContent>
+            { this.state.isEditing ?
+            
+            <CardContent style={{'display':'flex', 'justifyContent':'space-evenly'}}>
+              <Button variant='contained' style={{'backgroundColor':'#4088c6'}}>Edit</Button>
+              <Button variant='contained' color='secondary'>Delete</Button></CardContent>
+              : null}
+          </Card> 
+        })}
           {this.state.isAdding ? 
             this.addItemToBoardForm()
             : null }
-        </Card>
+
       </Grid>
     );
   }

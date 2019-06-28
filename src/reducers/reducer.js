@@ -11,21 +11,21 @@ const initialState = {
       content: [
         {
           id: 0,
-          task: 'Sunt id eiusmod ex voluptate occaecat irure id laboris duis sint. Elit amet in sint eu ea aliquip pariatur minim ut dolor sunt non. Dolore ad aliquip reprehenderit est adipisicing est proident est deserunt. Est sunt eu proident exercitation amet eu labore ut sint fugiat aliqua sint aliquip pariatur. Sunt excepteur irure officia nostrud cupidatat duis aute veniam laborum proident nisi aliquip. Consectetur cupidatat nisi ea est eu."'
+          task: 'Welcome to Monte\'s Trello Clone'
         },
       ]
     },
   ongoingBoard: 
     {
       title: "Ongoing",
-      content:[]
+      content:[{id:0, task:'Built with React and Redux'}]
     },
 
   completedBoard : 
     {
       title: "Completed",
-      content:[]
-    }},
+      content:[{id:0, task:'Source Code at https://github.com/montelai/collaboration-sharing'}]
+    }}, 
   customBoard: [],
   isLoading: true
 };
@@ -38,7 +38,7 @@ function collaborationApp(state = initialState, action) {
       console.log(action)
       const newItem = {
         id: state.boards[action.id].content.length,
-        content: action.content
+        task: action.content
       }
       return {
         ...state, 

@@ -6,7 +6,7 @@ export const EDIT_ITEM = "EDIT_ITEM";
 
 //action creators
 
-export function addItem(content) {
+export function addItem(content,id) {
   return {
     type: ADD_ITEM,
     content: content
