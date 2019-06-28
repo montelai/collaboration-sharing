@@ -49,7 +49,6 @@ class Board extends Component {
   }
 
   addItemToBoard = (event) => {
-    console.log(event.target)
     this.setState ({
       isAdding:true,
       key: this.props.id
@@ -72,7 +71,7 @@ class Board extends Component {
                 variant='contained' 
                 color='primary'
                 onClick={()=>{
-                  this.props.addItem(this.state.content)
+                  this.props.addItem(this.state.content, this.state.key)
                   this.setState({isAdding: false, content:''})
                 }}>Add</Button> 
               <Button 
@@ -119,7 +118,7 @@ class Board extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addItem: (content) => dispatch({type:'ADD_ITEM', content: content})
+    addItem: (content, id) => dispatch({type:'ADD_ITEM', content: content, id:id})
   }
 
 }

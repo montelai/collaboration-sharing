@@ -35,20 +35,24 @@ function collaborationApp(state = initialState, action) {
     case ADD_ITEM:
 
       console.log(action)
-      //sample board
-      // {
-      //   title:'',
-      //   content:'',
-      // }
-      return Object.assign({}, state, {
-        boards: [
+      console.log(action)
+      const newItem = {
+        id: state.boards[action.id].content.length,
+        content: action.content
+      }
+      return {
+        ...state, 
+        boards: {
           ...state.boards,
-          {
-            title: action.title,
-            content: action.content
+          [action.id] : {
+            ...state.boards[action.id],
+            content: [...state.boards[action.id].content, newItem]
           }
-        ]
-      });
+        }
+      }
+      // return Object.assign({}, state, {
+      //   boards : {...state.boards, action.id }
+      // });
 
     case REMOVE_ITEM:
       const filtered = state.boards.filter(id => id);
