@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import compose from 'recompose/compose';
 
 
+
 const styles = {
   boardItem: {
     width: "270px",
@@ -46,25 +47,41 @@ class Board extends Component {
     isAdding : false,
     isEditing : false,
     content:'',
-    key:'',
-    hovering: false
+    id:'',
+    hovering: false,
+    boardName: this.props.boardName
   }
-
+  //helper function to show edit and delete button when clicked
   editItem = (event) => {
+
     this.setState({
       isEditing: !this.state.isEditing,
-      key: this.props.id
+      id: event.target.id,
     })
   }
 
+  editItemForm(){
+
+  }
+
+  deleteItem = () => {
+    this.props.removeItem(this.state.id, this.state.boardName )
+  }
+
+  //helper function to show add button
   addItemToBoard = (event) => {
+
+    const id = this.props.data[this.props.data.length-1].id+1
+
     this.setState ({
       isAdding:true,
-      key: this.props.id
+      boardName: this.props.boardName,
+      id: id
     })
   }
 
-  addItemToBoardForm = () => {
+  //helper function used to add a new task in the board
+  addItemToBoardForm = (event) => {
     return <Card style={{'marginTop':'10px'}}>
       <form autoComplete='off' style={{'paddingTop':'10px', 'paddingBottom':'10px'}}>
             <CardContent>
@@ -81,7 +98,7 @@ class Board extends Component {
                 variant='contained' 
                 color='primary'
                 onClick={()=>{
-                  this.props.addItem(this.state.content, this.state.key)
+                  this.props.addItem(this.state.content, this.state.id, this.state.boardName)
                   this.setState({isAdding: false, content:''})
                 }}>Add</Button> 
               <Button 
@@ -109,9 +126,6 @@ class Board extends Component {
             className={classes.addIcon}
             onClick={this.addItemToBoard}
           />
-          {/* <RemoveCircle 
-            className={classes.removeIcon} 
-            onClick={()=> {console.log("clicked");}}/> */}
         </Grid>
         <Typography>
           {this.props.title ? this.props.title : "Enter a Title"}
@@ -121,15 +135,16 @@ class Board extends Component {
             <CardContent/>
           </Card>
           : null}
-        
+
         {this.props.data.map((value, index) => {
           return <Card 
                     className={classes.boardItemContents} 
                     style={{'marginTop':'5px'}}
-                    onClick={this.editItem}
+                    id={value.id}
                     >
-          <CardContent>
+          <CardContent style={{'overflowWrap':'break-word'}} onClick={this.editItem} id={value.id}>
             <Typography 
+              id={value.id}
               style={{
                 'textAlign':'start', 
                 'textOverflow':'string', 
@@ -137,11 +152,13 @@ class Board extends Component {
                 {value.task}
               </Typography>
             </CardContent>
-            { this.state.isEditing ?
+
+            {/* //edit and delete functionality */}
+            { (this.state.isEditing && (this.state.id == value.id))?
             
             <CardContent style={{'display':'flex', 'justifyContent':'space-evenly'}}>
               <Button variant='contained' style={{'backgroundColor':'#4088c6'}}>Edit</Button>
-              <Button variant='contained' color='secondary'>Delete</Button></CardContent>
+              <Button variant='contained' color='secondary' onClick={this.deleteItem} disabled={value.id === 0 ? true : false }>Delete</Button></CardContent>
               : null}
           </Card> 
         })}
@@ -156,7 +173,8 @@ class Board extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addItem: (content, id) => dispatch({type:'ADD_ITEM', content: content, id:id})
+    addItem: (content, id, boardName) => dispatch({type:'ADD_ITEM', content: content, id:id, boardName:boardName}),
+    removeItem: (id, boardName) => dispatch({type:'REMOVE_ITEM', id:id, boardName: boardName})
   }
 
 }

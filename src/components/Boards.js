@@ -23,7 +23,13 @@ export default function Boards(props) {
   return (
     <Grid className={classes.Board}>
       {Object.keys(props.boards).map((key) => {
-        return <Board new={false} data={props.boards[key].content} title={props.boards[key].title} key={props.boards[key].title} id={key}/>
+        return <Board 
+                  new={false} 
+                  data={props.boards[key].content} 
+                  title={props.boards[key].title} 
+                  key={props.boards[key].title} 
+                  boardName={key}
+                  />
       })}
     </Grid>
   );
