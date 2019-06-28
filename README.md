@@ -8,5 +8,5 @@ npm start
 
 ## Release History
 
-1.0.0 - Financial Dashboard
+0.1.0 Alpha Version
 
