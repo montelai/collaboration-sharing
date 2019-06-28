@@ -26,7 +26,7 @@ export default function Navigation() {
   const classes = useStyles();
 
   return (
-    <AppBar>
+    <AppBar className={classes.root} position="static">
       <Toolbar>
         <IconButton
           edge="start"
