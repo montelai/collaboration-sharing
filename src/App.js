@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Container } from "@material-ui/core";
+import { Container, Typography, Link } from "@material-ui/core";
 import Boards from "./components/Boards";
 import Navigation from "./components/Navigation";
 import { connect } from "react-redux";
@@ -31,6 +31,8 @@ class App extends Component {
       >
         <Navigation />
         <Boards boards={this.props.boards} />
+        <Typography>Created by Monte Lai</Typography>
+        <Typography>Source Code: <a href='https://github.com/montelai/collaboration-sharing'>https://github.com/montelai/collaboration-sharing</a></Typography>
       </Container>
     );
   }
