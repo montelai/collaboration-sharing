@@ -9,21 +9,21 @@ export const EDIT_ITEM = "EDIT_ITEM";
 export function addItem(content) {
   return {
     type: ADD_ITEM,
-    content
+    content: content
   };
 }
 
 export function removeItem(id) {
   return {
     type: REMOVE_ITEM,
-    id
+    id: id
   };
 }
 
 export function editItem(id, text) {
   return {
     type: EDIT_ITEM,
-    id,
-    text
+    id: id,
+    text: text
   };
 }

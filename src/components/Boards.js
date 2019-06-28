@@ -20,7 +20,7 @@ export default function Boards(props) {
 
   return (
     <Grid className={classes.Board}>
-      {props.boards.length == 0 ? (
+      {props.boards.length === 0 ? (
         <Board new={true} />
       ) : (
         props.boards.map(board => {

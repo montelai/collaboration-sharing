@@ -1,5 +1,6 @@
 import { ADD_ITEM, REMOVE_ITEM, EDIT_ITEM } from "../actions/actions";
 
+
 // initial state
 
 const initialState = {
@@ -16,6 +17,8 @@ const initialState = {
 function collaborationApp(state = initialState, action) {
   switch (action.type) {
     case ADD_ITEM:
+
+      console.log(action)
       //sample board
       // {
       //   title:'',
@@ -26,7 +29,7 @@ function collaborationApp(state = initialState, action) {
           ...state.boards,
           {
             title: action.title,
-            content: action.text
+            content: action.content
           }
         ]
       });
