@@ -53,7 +53,7 @@ function collaborationApp(state = initialState, action) {
 
     case REMOVE_ITEM:
       console.log(action)
-      const filtered = state.boards[action.boardName].content.filter(item => item.id != action.id);
+      const filtered = state.boards[action.boardName].content.filter(item => item.id !== action.id);
       return {
         ...state,
         boards: {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Container, Typography, Grid, Button, Drawer, List, ListItem} from "@material-ui/core";
+import { Typography, Grid, Button, Drawer, List, ListItem} from "@material-ui/core";
 import Boards from "./components/Boards";
 import Navigation from "./components/Navigation";
 import { connect } from "react-redux";

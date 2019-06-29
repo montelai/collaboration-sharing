@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Grid, Card, CardContent, Typography, TextField, Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import AddCircle from "@material-ui/icons/AddCircle";
-import RemoveCircle from "@material-ui/icons/RemoveCircle";
 import {connect} from 'react-redux';
 import compose from 'recompose/compose';
 
@@ -164,7 +163,7 @@ class Board extends Component {
     const { classes } = this.props;
 
     return (
-      <Grid className={classes.boardItem}>
+      <Grid className={classes.boardItem} >
         <Grid className={classes.boardItemButtons}>
           <AddCircle
             className={classes.addIcon}
@@ -185,8 +184,9 @@ class Board extends Component {
                     className={classes.boardItemContents} 
                     style={{'marginTop':'5px'}}
                     id={value.id}
+                    key={value.id}
                     >
-          <CardContent style={{'overflowWrap':'break-word'}} onClick={this.editItem} id={value.id}>
+          <CardContent style={{'overflowWrap':'break-word'}} onClick={this.editItem} id={value.id} key={value.id}>
             {(this.state.editMode && (this.state.id==value.id)) ?
             <form autoComplete='off' style={{'paddingTop':'10px', 'paddingBottom':'10px'}}>
               <CardContent>
