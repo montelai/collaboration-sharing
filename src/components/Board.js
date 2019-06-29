@@ -7,7 +7,6 @@ import {connect} from 'react-redux';
 import compose from 'recompose/compose';
 
 
-
 const styles = {
   boardItem: {
     width: "270px",
@@ -41,27 +40,58 @@ const styles = {
   }
 };
 
+
+
 class Board extends Component {
 
   state = {
     isAdding : false,
     isEditing : false,
+    editMode: false,
     content:'',
     id:'',
     hovering: false,
     boardName: this.props.boardName
   }
-  //helper function to show edit and delete button when clicked
-  editItem = (event) => {
 
-    this.setState({
-      isEditing: !this.state.isEditing,
-      id: event.target.id,
-    })
+  //Show UI Options//
+
+  //shows the add button
+  showAdd = () => {
+    return this.state.isAdding ? 
+            this.addItemToBoardForm()
+            : null 
   }
 
-  editItemForm(){
+  //show the edit button
+  showEdit = (value) => {
 
+    
+
+    return (this.state.isEditing && (this.state.id == value.id))?
+            
+    <CardContent style={{'display':'flex', 'justifyContent':'space-evenly'}}>
+      <Button variant='contained' style={{'backgroundColor':'#4088c6'}} onClick={()=> {this.setState({editMode:!this.state.editMode, isEditing:!this.state.isEditing})}}>Edit</Button>
+      <Button variant='contained' color='secondary' onClick={this.deleteItem} disabled={value.id === 0 ? true : false }>Delete</Button></CardContent>
+      : null
+  }
+
+
+  //helper function to show edit and delete button when clicked
+  editItem = (event) => {
+    // console.log(event, event.target)
+    // console.log(event.target.className)
+    const id = (event.target.id)
+    let content = this.getEditContentValue(id)
+
+    if (event.target.className === 'MuiTypography-root MuiTypography-body1'){
+      this.setState({
+        isEditing: !this.state.isEditing,
+        id: event.target.id,
+        content: content
+      })
+    }
+    
   }
 
   deleteItem = () => {
@@ -113,6 +143,17 @@ class Board extends Component {
       </Card>
   }
 
+  getEditContentValue = (id) => {
+
+    let content;
+    this.props.data.map(item => {
+      if (item.id === parseInt(id)){
+        content = item.task
+      }
+    })
+    return content
+  }
+
   componentDidMount(){
   }
 
@@ -143,6 +184,35 @@ class Board extends Component {
                     id={value.id}
                     >
           <CardContent style={{'overflowWrap':'break-word'}} onClick={this.editItem} id={value.id}>
+            {(this.state.editMode && (this.state.id==value.id)) ?
+            <form autoComplete='off' style={{'paddingTop':'10px', 'paddingBottom':'10px'}}>
+              <CardContent>
+                <form>
+                  <TextField  
+                    label={'Edit task' }
+                    value={this.state.content}
+                    onChange={(event)=>this.setState({content: event.target.value})}
+                  />
+                </form>   
+              </CardContent>
+              <Grid style={{'justifyContent':'space-evenly', 'display':'flex'}}>
+                <Button 
+                  variant='contained' 
+                  color='primary'
+                  onClick={()=>{
+                    this.props.editItem(this.state.content, this.state.id, this.state.boardName)
+                    this.setState({isEditing: !this.state.isEditing, content:'', editMode: !this.state.editMode})
+                  }}>Confirm</Button> 
+                <Button 
+                  variant='contained' 
+                  color='secondary' 
+                  onClick={()=>{
+                    this.setState({isEditing: !this.state.isEditing, editMode:!this.state.editMode})
+                  }}>Cancel</Button>
+              </Grid>
+              
+            </form>
+            :
             <Typography 
               id={value.id}
               style={{
@@ -150,22 +220,14 @@ class Board extends Component {
                 'textOverflow':'string', 
                 'justifyContent':'flex-start'}}>
                 {value.task}
-              </Typography>
+              </Typography>}
             </CardContent>
 
             {/* //edit and delete functionality */}
-            { (this.state.isEditing && (this.state.id == value.id))?
-            
-            <CardContent style={{'display':'flex', 'justifyContent':'space-evenly'}}>
-              <Button variant='contained' style={{'backgroundColor':'#4088c6'}}>Edit</Button>
-              <Button variant='contained' color='secondary' onClick={this.deleteItem} disabled={value.id === 0 ? true : false }>Delete</Button></CardContent>
-              : null}
+            { this.showEdit(value)}
           </Card> 
         })}
-          {this.state.isAdding ? 
-            this.addItemToBoardForm()
-            : null }
-
+          {this.showAdd()}
       </Grid>
     );
   }
@@ -174,7 +236,8 @@ class Board extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     addItem: (content, id, boardName) => dispatch({type:'ADD_ITEM', content: content, id:id, boardName:boardName}),
-    removeItem: (id, boardName) => dispatch({type:'REMOVE_ITEM', id:id, boardName: boardName})
+    removeItem: (id, boardName) => dispatch({type:'REMOVE_ITEM', id:id, boardName: boardName}),
+    editItem: (content, id, boardName) => dispatch({type:'EDIT_ITEM', id:id, boardName:boardName, content:content})
   }
 
 }

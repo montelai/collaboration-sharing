@@ -68,16 +68,33 @@ function collaborationApp(state = initialState, action) {
 
     case EDIT_ITEM:
       console.log(action)
-      const updatedItems = state.map(item => {
-        if (item.id === action.id) {
-          return { ...item, ...action.content };
-        }
-        return item;
-      });
+      // let updatedItems = {id: action.id, content: action.content}
+      
+      // state.boards[action.boardName].content.map(item => {
 
-      return Object.assign({}, state, {
-        boards: [...state.boards, ...updatedItems]
-      });
+      //     if (item.id === action.id) {
+      //       return { id: action.id, content:[action.content] }
+      //     }
+      //   });
+
+      // console.log(updatedItems)
+
+      const newContent = [...state.boards[action.boardName].content]
+      newContent[action.id].task = action.content
+      console.log (newContent[action.id])
+      
+
+      return {
+        ...state,
+          boards: {
+            ...state.boards,
+            [action.boardName]:{
+              ...state.boards[action.boardName],
+              content: [...newContent],
+              
+            }
+          }
+      }
 
     default:
       return state;
