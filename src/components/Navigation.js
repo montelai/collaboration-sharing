@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    // flexGrow: 1
   },
   menuButton: {
     marginRight: "5px",
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   }
 }));
-export default function Navigation() {
+export default function Navigation(props) {
   const classes = useStyles();
 
   return (
@@ -33,7 +33,7 @@ export default function Navigation() {
           className={classes.menuButton}
           aria-label="Menu"
         >
-          <MenuIcon />
+          <MenuIcon onClick={props.toggleDrawer}/>
         </IconButton>
 
         <Typography variant="h6" className={classes.title}>

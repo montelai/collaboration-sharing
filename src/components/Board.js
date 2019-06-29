@@ -10,15 +10,18 @@ import compose from 'recompose/compose';
 const styles = {
   boardItem: {
     width: "270px",
-    display: "inline-block",
-    overflowY: "auto",
+    // display: "inline-block",
+    // overflowY: "auto",
     backgroundColor: "#e2e4e6",
-    boxShadow: "5px 10px  rbga(0,0,0,0.5)",
+    boxShadow: "5px 5px 5px 0px #3b3b3b",
     borderRadius: "10px",
     verticalAlign: "top",
     padding: "5px",
     paddingBottom: "20px",
-    margin: "10px"
+    margin: "10px",
+    display:'flex',
+    flexDirection: 'column',
+    
   },
   boardItemContents: {},
   boardItemButtons: {

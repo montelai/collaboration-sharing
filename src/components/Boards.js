@@ -10,8 +10,9 @@ const styles = makeStyles({
     flex: 1,
     margin: "10px",
     padding: "10px",
+    paddingLeft: '10px',
     width: "100%",
-    overflowX: "hidden"
+    overflowX: "hidden",
   }
 });
 
